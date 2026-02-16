@@ -14,7 +14,7 @@
 
 <p>An imagery example of a BFS</p>
 <img width="1333" height="893" alt="img" src="https://github.com/user-attachments/assets/6332686e-fbb4-4bce-80d9-e1ce0ea9374f" />
-<img width="1315" height="876" alt="image" src="https://github.com/user-attachments/assets/3a94eb2e-4b59-447f-816d-a4236077f824" />
+<img width="1326" height="941" alt="image" src="https://github.com/user-attachments/assets/af2b3f09-7779-49eb-ade2-69aae6260bac" />
 
 
 # Copyright (c) 2024 Sam
