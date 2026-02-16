@@ -4,7 +4,8 @@
 
 <h1>Maze Solver</h1>
 
-<p>This is an animated and interactive maze solver made with pygame. It had 3 algorithms that it can use:
+<p>This is an animated and interactive maze solver made with pygame. To interact with it (adding your own walls/visited nodes/dead-end dots), left click on the nodes(white dots) to make it dead or reclick (left click) on it to make it available (alive again). Use the UP button to activate the algorithm when you have filled in your dead-ends.</p>
+<p>It had 3 algorithms that it can use:</p>
 <ul>
 <li>BFS</li>
 <li>DFS</li>
