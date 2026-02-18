@@ -8,6 +8,7 @@ import pygame, collections,math
 width = 1080
 height = 750
 screen = pygame.display.set_mode((width, height))
+pygame.display.set_caption('BFS')
 
 # Running the program
 running = True
@@ -22,7 +23,7 @@ RADIUS = 5
 SEPERATION = 60 #It is extremely important for this to be a multiple of 10
 STARTINGNODE = (30,30)# It is extrmely important for this to be a multiple of 10, both the x and y coord
 GREEN = (0,255,0)
-FINALPATHCOLOR = (255,0,0)
+FINALPATHCOLOR = (0,255,0)
 
 # The algorithm to use
 algo = "BFS"
@@ -33,11 +34,20 @@ for w in range(STARTINGNODE[0],width,SEPERATION):
     for h in range(STARTINGNODE[1],height,SEPERATION):
         nodes.add((w,h))
 
+# Getting End node
+ENDNODE = (w,h)
+
 # Generating the graph for the grid/maze
 graph = {}
 visited = set()
 tracker = {STARTINGNODE: STARTINGNODE}
 previous_node = STARTINGNODE
+queue = collections.deque([STARTINGNODE])
+final_path = []
+path_filled = False
+index = 0
+drawing_nodes = []
+StartBFS = False
 
 def getChildNodes(node,visited):
     # Getting child nodes
@@ -57,14 +67,7 @@ def getChildNodes(node,visited):
     if down_node in nodes and down_node not in visited:
         child_nodes.add(down_node)
 
-    return child_nodes
-
-queue = collections.deque([STARTINGNODE])
-final_path = []
-path_filled = False
-index = 0
-drawing_nodes = []
-StartBFS = False
+    return sorted(child_nodes)
 
 while running:
     for event in pygame.event.get():
@@ -86,13 +89,19 @@ while running:
                     break
         elif event.type==pygame.KEYDOWN: # I need this to run the bfs when you have clicked finished colouring your desired grid. It used the Enter button
             if event.key==pygame.K_UP:
-                StartBFS = True
-
-                # if  bool(final_path):
-                #     visited.clear()
-                #     final_path.clear()
-                #     queue.clear()
-                #     drawing_nodes.clear()
+                if len(queue) == 1:
+                    StartBFS = True
+                else:
+                    StartBFS = False
+                    visited = set()
+                    tracker = {STARTINGNODE: STARTINGNODE}
+                    previous_node = STARTINGNODE
+                    queue = collections.deque([STARTINGNODE])
+                    final_path = []
+                    path_filled = False
+                    index = 0
+                    drawing_nodes = []
+                    GREEN = (0,255,0)
 
     screen.fill(BLACK)
 
@@ -119,6 +128,8 @@ while running:
         visited.add(current_node)
 
     else:
+        if ENDNODE in tracker.keys():
+            current_node = ENDNODE
         if StartBFS:
             if path_filled == False:
                 while True:
@@ -131,6 +142,7 @@ while running:
                         break
 
             if index < len(final_path) -1:
+                GREEN = WHITE
                 pygame.draw.circle(screen,FINALPATHCOLOR,final_path[index],RADIUS,RADIUS)
                 pygame.draw.line(screen, WHITE, final_path[index], final_path[index+1],)
                 drawing_nodes.append(final_path[index])
@@ -143,6 +155,6 @@ while running:
             pygame.draw.circle(screen,FINALPATHCOLOR,STARTINGNODE,RADIUS,RADIUS)
 
     # Setting fps
-    clock.tick(30)
+    clock.tick(300)
 
     pygame.display.update()
